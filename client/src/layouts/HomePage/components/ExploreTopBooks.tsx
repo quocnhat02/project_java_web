@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Link } from 'react-router-dom';
+
 const ExploreTopBooks = () => {
   return (
     <div className='p-5 mb-4 bg-dark header'>
@@ -13,13 +15,13 @@ const ExploreTopBooks = () => {
           <p className='col-md-8 fs-4 text-white'>
             Where would you like to go next?
           </p>
-          <a
-            href='#'
+          <Link
+            to='/search'
             type='button'
             className='btn main-color btn-lg text-white'
           >
             Explore top books
-          </a>
+          </Link>
         </div>
       </div>
     </div>

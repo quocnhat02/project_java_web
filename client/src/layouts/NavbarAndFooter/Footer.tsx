@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -8,14 +9,14 @@ const Footer = () => {
         <p className='col-md-4 mb-0 text-white'>© Java Book App, Inc</p>
         <ul className='nav navbar-dark col-md-4 justify-content-end'>
           <li className='nav-item'>
-            <a href='#' className='nav-link px-2 text-white'>
+            <Link to='/' className='nav-link px-2 text-white'>
               Home
-            </a>
+            </Link>
           </li>
           <li className='nav-item'>
-            <a href='#' className='nav-link px-2 text-white'>
+            <Link to='/search' className='nav-link px-2 text-white'>
               Search Books
-            </a>
+            </Link>
           </li>
         </ul>
       </footer>
