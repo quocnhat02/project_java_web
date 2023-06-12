@@ -4,24 +4,27 @@ import BookModel from '../../models/BookModel';
 // import { Pagination } from '../Utils/Pagination';
 import { SearchBook } from './components/SearchBook';
 import SpinnerLoading from '../Utils/SpinnerLoading';
+import Pagination from '../Utils/Pagination';
 
 export const SearchBooksPage = () => {
   const [books, setBooks] = useState<BookModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
-  //   const [currentPage, setCurrentPage] = useState(1);
-  //   const [booksPerPage] = useState(5);
-  //   const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
-  //   const [totalPages, setTotalPages] = useState(0);
-  //   const [search, setSearch] = useState('');
-  //   const [searchUrl, setSearchUrl] = useState('');
-  //   const [categorySelection, setCategorySelection] = useState('Book category');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(5);
+  const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [search, setSearch] = useState('');
+  const [searchUrl, setSearchUrl] = useState('');
+  const [categorySelection, setCategorySelection] = useState('Book category');
 
   useEffect(() => {
     const fetchBooks = async () => {
       const baseUrl: string = 'http://localhost:8080/api/books';
 
-      let url: string = `${baseUrl}?page=0&size=5`;
+      let url: string = `${baseUrl}?page=${
+        currentPage - 1
+      }&size=${booksPerPage}`;
 
       //   if (searchUrl === '') {
       //     url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
@@ -43,8 +46,8 @@ export const SearchBooksPage = () => {
 
       const responseData = responseJson._embedded.books;
 
-      //   setTotalAmountOfBooks(responseJson.page.totalElements);
-      //   setTotalPages(responseJson.page.totalPages);
+      setTotalAmountOfBooks(responseJson.page.totalElements);
+      setTotalPages(responseJson.page.totalPages);
 
       const loadedBooks: BookModel[] = [];
 
@@ -69,8 +72,8 @@ export const SearchBooksPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-    // window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -114,14 +117,14 @@ export const SearchBooksPage = () => {
   //     }
   //   };
 
-  //   const indexOfLastBook: number = currentPage * booksPerPage;
-  //   const indexOfFirstBook: number = indexOfLastBook - booksPerPage;
-  //   let lastItem =
-  //     booksPerPage * currentPage <= totalAmountOfBooks
-  //       ? booksPerPage * currentPage
-  //       : totalAmountOfBooks;
+  const indexOfLastBook: number = currentPage * booksPerPage;
+  const indexOfFirstBook: number = indexOfLastBook - booksPerPage;
+  let lastItem =
+    booksPerPage * currentPage <= totalAmountOfBooks
+      ? booksPerPage * currentPage
+      : totalAmountOfBooks;
 
-  //   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -200,9 +203,11 @@ export const SearchBooksPage = () => {
             </div>
           </div>
           <div className='mt-3'>
-            <h5>Number of results: (22)</h5>
+            <h5>Number of results: ({totalAmountOfBooks})</h5>
           </div>
-          <p>1 to of 22 items:</p>
+          <p>
+            {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks} items:
+          </p>
           {books.map((book) => (
             <SearchBook book={book} key={book.id} />
           ))}
@@ -231,13 +236,13 @@ export const SearchBooksPage = () => {
               </a>
             </div>
           )} */}
-          {/* {totalPages > 1 && (
+          {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               paginate={paginate}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>
