@@ -1,16 +1,14 @@
-import Carousel from './layouts/HomePage/Carousel';
-import ExploreTopBooks from './layouts/HomePage/ExploreTopBooks';
 import Navbar from './layouts/NavbarAndFooter/Navbar';
 import './App.css';
-import Heros from './layouts/HomePage/Heros';
+import Footer from './layouts/NavbarAndFooter/Footer';
+import HomePage from './layouts/HomePage/HomePage';
 
 function App() {
   return (
     <>
       <Navbar />
-      <ExploreTopBooks />
-      <Carousel />
-      <Heros />
+      <HomePage />
+      <Footer />
     </>
   );
 }

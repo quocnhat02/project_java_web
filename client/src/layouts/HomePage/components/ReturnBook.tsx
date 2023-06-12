@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
 
 const ReturnBook = () => {
   return (
     <div className='col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-3'>
       <div className='text-center'>
         <img
-          src={require('./../../Images/BooksImages/book-luv2code-1000.png')}
+          src={require('./../../../Images/BooksImages/book-luv2code-1000.png')}
           alt='book'
           width={'151'}
           height={'233'}
