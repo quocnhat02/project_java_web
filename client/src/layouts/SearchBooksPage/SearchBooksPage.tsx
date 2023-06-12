@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
 import BookModel from '../../models/BookModel';
@@ -22,19 +23,17 @@ export const SearchBooksPage = () => {
     const fetchBooks = async () => {
       const baseUrl: string = 'http://localhost:8080/api/books';
 
-      let url: string = `${baseUrl}?page=${
-        currentPage - 1
-      }&size=${booksPerPage}`;
+      let url: string = '';
 
-      //   if (searchUrl === '') {
-      //     url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
-      //   } else {
-      //     let searchWithPage = searchUrl.replace(
-      //       '<pageNumber>',
-      //       `${currentPage - 1}`
-      //     );
-      //     url = baseUrl + searchWithPage;
-      //   }
+      if (searchUrl === '') {
+        url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;
+      } else {
+        let searchWithPage = searchUrl.replace(
+          '<pageNumber>',
+          `${currentPage - 1}`
+        );
+        url = baseUrl + searchWithPage;
+      }
 
       const response = await fetch(url);
 
@@ -67,13 +66,12 @@ export const SearchBooksPage = () => {
       setBooks(loadedBooks);
       setIsLoading(false);
     };
-
     fetchBooks().catch((error: any) => {
       setIsLoading(false);
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [currentPage, searchUrl]);
 
   if (isLoading) {
     return <SpinnerLoading />;
@@ -87,35 +85,35 @@ export const SearchBooksPage = () => {
     );
   }
 
-  //   const searchHandleChange = () => {
-  //     setCurrentPage(1);
-  //     if (search === '') {
-  //       setSearchUrl('');
-  //     } else {
-  //       setSearchUrl(
-  //         `/search/findByTitleContaining?title=${search}&page=<pageNumber>&size=${booksPerPage}`
-  //       );
-  //     }
-  //     setCategorySelection('Book category');
-  //   };
+  const searchHandleChange = () => {
+    setCurrentPage(1);
+    if (search === '') {
+      setSearchUrl('');
+    } else {
+      setSearchUrl(
+        `/search/findByTitleContaining?title=${search}&page=<pageNumber>&size=${booksPerPage}`
+      );
+    }
+    setCategorySelection('Book category');
+  };
 
-  //   const categoryField = (value: string) => {
-  //     setCurrentPage(1);
-  //     if (
-  //       value.toLowerCase() === 'fe' ||
-  //       value.toLowerCase() === 'be' ||
-  //       value.toLowerCase() === 'data' ||
-  //       value.toLowerCase() === 'devops'
-  //     ) {
-  //       setCategorySelection(value);
-  //       setSearchUrl(
-  //         `/search/findByCategory?category=${value}&page=<pageNumber>&size=${booksPerPage}`
-  //       );
-  //     } else {
-  //       setCategorySelection('All');
-  //       setSearchUrl(`?page=<pageNumber>&size=${booksPerPage}`);
-  //     }
-  //   };
+  const categoryField = (value: string) => {
+    setCurrentPage(1);
+    if (
+      value.toLowerCase() === 'fe' ||
+      value.toLowerCase() === 'be' ||
+      value.toLowerCase() === 'data' ||
+      value.toLowerCase() === 'devops'
+    ) {
+      setCategorySelection(value);
+      setSearchUrl(
+        `/search/findByCategory?category=${value}&page=<pageNumber>&size=${booksPerPage}`
+      );
+    } else {
+      setCategorySelection('All');
+      setSearchUrl(`?page=<pageNumber>&size=${booksPerPage}`);
+    }
+  };
 
   const indexOfLastBook: number = currentPage * booksPerPage;
   const indexOfFirstBook: number = indexOfLastBook - booksPerPage;
@@ -138,11 +136,11 @@ export const SearchBooksPage = () => {
                   type='search'
                   placeholder='Search'
                   aria-labelledby='Search'
-                  //   onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
                   className='btn btn-outline-success'
-                  //   onClick={() => searchHandleChange()}
+                  onClick={() => searchHandleChange()}
                 >
                   Search
                 </button>
@@ -157,43 +155,33 @@ export const SearchBooksPage = () => {
                   data-bs-toggle='dropdown'
                   aria-expanded='false'
                 >
-                  {/* {categorySelection} */}
+                  {categorySelection}
                 </button>
                 <ul
                   className='dropdown-menu'
                   aria-labelledby='dropdownMenuButton1'
                 >
-                  <li
-                  //   onClick={() => categoryField('All')}
-                  >
+                  <li onClick={() => categoryField('All')}>
                     <a className='dropdown-item' href='#'>
                       All
                     </a>
                   </li>
-                  <li
-                  //   onClick={() => categoryField('FE')}
-                  >
+                  <li onClick={() => categoryField('FE')}>
                     <a className='dropdown-item' href='#'>
                       Front End
                     </a>
                   </li>
-                  <li
-                  //   onClick={() => categoryField('BE')}
-                  >
+                  <li onClick={() => categoryField('BE')}>
                     <a className='dropdown-item' href='#'>
                       Back End
                     </a>
                   </li>
-                  <li
-                  //    onClick={() => categoryField('Data')}
-                  >
+                  <li onClick={() => categoryField('Data')}>
                     <a className='dropdown-item' href='#'>
                       Data
                     </a>
                   </li>
-                  <li
-                  //    onClick={() => categoryField('DevOps')}
-                  >
+                  <li onClick={() => categoryField('DevOps')}>
                     <a className='dropdown-item' href='#'>
                       DevOps
                     </a>
@@ -202,16 +190,7 @@ export const SearchBooksPage = () => {
               </div>
             </div>
           </div>
-          <div className='mt-3'>
-            <h5>Number of results: ({totalAmountOfBooks})</h5>
-          </div>
-          <p>
-            {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks} items:
-          </p>
-          {books.map((book) => (
-            <SearchBook book={book} key={book.id} />
-          ))}
-          {/* {totalAmountOfBooks > 0 ? (
+          {totalAmountOfBooks > 0 ? (
             <>
               <div className='mt-3'>
                 <h5>Number of results: ({totalAmountOfBooks})</h5>
@@ -235,7 +214,7 @@ export const SearchBooksPage = () => {
                 Library Services
               </a>
             </div>
-          )} */}
+          )}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
