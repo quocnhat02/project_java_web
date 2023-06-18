@@ -9,7 +9,7 @@ const ReturnBook: React.FC<{ book: BookModel }> = (props) => {
       <div
         className='text-center'
         style={{
-          height: '400px',
+          height: '380px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
