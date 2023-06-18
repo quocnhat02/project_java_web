@@ -2,8 +2,10 @@ package com.nhom17books.booksapp.service;
 
 import com.nhom17books.booksapp.dao.BookRepository;
 import com.nhom17books.booksapp.dao.CheckoutRepository;
+import com.nhom17books.booksapp.dao.HistoryRepository;
 import com.nhom17books.booksapp.entity.Book;
 import com.nhom17books.booksapp.entity.Checkout;
+import com.nhom17books.booksapp.entity.History;
 import com.nhom17books.booksapp.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,13 @@ public class BookService {
 
     private CheckoutRepository checkoutRepository;
 
+    private HistoryRepository historyRepository;
+
     @Autowired
-    public BookService(BookRepository bookRepository,CheckoutRepository checkoutRepository ){
+    public BookService(BookRepository bookRepository,CheckoutRepository checkoutRepository, HistoryRepository historyRepository ){
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
+        this.historyRepository = historyRepository;
     }
 
     public Book checkoutBook (String userEmail, Long bookId) throws Exception{
@@ -103,6 +108,16 @@ public class BookService {
 
         bookRepository.save(book.get());
         checkoutRepository.deleteById(validateCheckout.getId());
+
+        History history = new History(
+                userEmail,
+                validateCheckout.getCheckoutDate(),
+                LocalDate.now().toString(),
+                book.get().getTitle(),
+                book.get().getAuthor(),
+                book.get().getDescription(),
+                book.get().getImg()
+        );
     }
 
     public void renewLoan(String userEmail, Long bookId) throws Exception{
