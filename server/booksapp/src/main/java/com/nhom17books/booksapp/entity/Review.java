@@ -1,6 +1,7 @@
 package com.nhom17books.booksapp.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
