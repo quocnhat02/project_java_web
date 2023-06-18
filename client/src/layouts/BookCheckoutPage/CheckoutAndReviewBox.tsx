@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const CheckoutAndReviewBox: React.FC<{
   book: BookModel | undefined;
   mobile: boolean;
+  currentLoansCount: number;
 }> = (props) => {
   return (
     <div
@@ -15,7 +16,7 @@ const CheckoutAndReviewBox: React.FC<{
       <div className='card-body container'>
         <div className='mt-3'>
           <p>
-            <b>0/5 </b>
+            <b>{props.currentLoansCount}/5 </b>
             books checked out
           </p>
           <hr />
