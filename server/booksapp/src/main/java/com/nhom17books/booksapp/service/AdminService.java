@@ -45,7 +45,8 @@ public class AdminService {
             throw new Exception("Không tìm thấy sách");
         }
 
-        book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
+        if(book.get().getCopies() > book.get().getCopiesAvailable())
+            book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
 
         bookRepository.save(book.get());
     }
