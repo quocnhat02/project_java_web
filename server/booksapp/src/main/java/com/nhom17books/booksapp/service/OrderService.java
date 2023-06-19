@@ -48,10 +48,10 @@ public class OrderService {
         List<Book> listBook = new ArrayList<Book>();
         List<Long> listBookId = new ArrayList<Long>();
         listBookId = order.getListBookId();
-        Long total = 0l;
+        Long total = 0L;
         for(int i = 0; i < listBookId.size(); i++){
             Optional<Book> book = bookRepository.findById(listBookId.get(i));
-            total = Long.valueOf(total + book.get().getPrice());
+            total = total + book.get().getPrice();
         }
         Order newOrder = new Order();
         newOrder.setOrderDate(LocalDate.now().toString());

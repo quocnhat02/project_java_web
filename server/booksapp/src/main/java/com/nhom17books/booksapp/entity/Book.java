@@ -37,5 +37,5 @@ public class Book {
     private String img;
 
     @Column(name = "price")
-    private String price;
+    private Long price;
 }
