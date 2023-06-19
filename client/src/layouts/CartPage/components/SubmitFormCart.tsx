@@ -94,6 +94,7 @@ const SubmitFormCart = () => {
         phone: '',
         address: '',
       });
+      sessionStorage.clear();
       dispatch({
         type: 'UPDATE_CART',
         payload: {
