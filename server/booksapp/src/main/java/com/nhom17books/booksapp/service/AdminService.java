@@ -38,6 +38,18 @@ public class AdminService {
         bookRepository.save(book.get());
     }
 
+    public void increaseBookAvailable(Long bookId) throws Exception{
+        Optional<Book> book = bookRepository.findById(bookId);
+
+        if (!book.isPresent()){
+            throw new Exception("Không tìm thấy sách");
+        }
+
+        book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
+
+        bookRepository.save(book.get());
+    }
+
     public void decreaseBookQuantity(Long bookId) throws Exception{
         Optional<Book> book = bookRepository.findById(bookId);
 
@@ -74,4 +86,5 @@ public class AdminService {
         checkoutRepository.deleteAllByBookId(bookId);
         reviewRepository.deleteAllByBookId(bookId);
     }
+
 }

@@ -35,4 +35,7 @@ public class Checkout {
 
     @Column(name = "book_id")
     private Long bookId;
+
+//    @Column(name = "status")
+//    private byte status;
 }
