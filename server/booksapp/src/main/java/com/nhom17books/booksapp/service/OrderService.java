@@ -61,7 +61,7 @@ public class OrderService {
         return listBook;
     }
 
-    public void postOder(String userEmail, AddOrder order) {
+    public void postOrder(String userEmail, AddOrder order) {
         List<Book> listBook = new ArrayList<Book>();
         List<Long> listBookId = new ArrayList<Long>();
         listBookId = order.getListBookId();
@@ -104,4 +104,7 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public List<Order> getAllOrderByUserEmail(String userEmail) {
+        return orderRepository.findOrderByUserEmail(userEmail);
+    }
 }
