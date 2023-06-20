@@ -15,6 +15,7 @@ const OrderDetailBook: React.FC<{
   // Normal Loading Pieces
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const [httpError, setHttpError] = useState(null);
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   const [ordersDetails, setOrdersDetails] = useState<BookModel[]>([]);
   const [statusUpdate, setStatusUpdate] = useState(1);
@@ -48,7 +49,7 @@ const OrderDetailBook: React.FC<{
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [authState]);
+  }, [authState, fetchAgain]);
 
   if (isLoadingOrders) {
     return <SpinnerLoading />;
@@ -60,6 +61,24 @@ const OrderDetailBook: React.FC<{
         <p>{httpError}</p>
       </div>
     );
+  }
+
+  async function updateStatusFunction() {
+    const url = `http://localhost:8080/api/admin/secure/changestatus/?orderId=${props?.orderId}&status=${statusUpdate}`;
+
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const statusUpdateResponse = await fetch(url, requestOptions);
+    if (!statusUpdateResponse.ok) {
+      throw new Error('Something went wrong!');
+    }
+    setFetchAgain(!fetchAgain);
   }
 
   return (
@@ -150,7 +169,7 @@ const OrderDetailBook: React.FC<{
             fontSize: '1.4em',
             marginBottom: '1em',
           }}
-          onClick={() => setOrdersDetails([])}
+          onClick={updateStatusFunction}
         >
           Update Status
         </button>
