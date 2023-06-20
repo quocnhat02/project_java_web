@@ -90,14 +90,10 @@ public class OrderService {
         }
     }
 
-    public void changeStatus(Long orderId, boolean cancel) {
+    public void changeStatus(Long orderId, Integer status) {
         Optional<Order> findOrder = orderRepository.findById(orderId);
         Order order = new Order();
-        if(cancel){
-            order.setStatus(5);
-        }else{
-            order.setStatus(findOrder.get().getStatus() + 1);
-        }
+        order.setStatus(status);
         order.setOrderDate(findOrder.get().getOrderDate());
         order.setId(findOrder.get().getId());
         order.setName(findOrder.get().getName());
