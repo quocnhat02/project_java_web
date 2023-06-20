@@ -40,8 +40,24 @@ public class OrderService {
         return this.orderRepository.findAll();
     }
 
-    public List<OrderDetails> getAllOrderDetails(Long orderId){
-        return this.orderDetailsRepository.findOrderDetailsByOrderId(orderId);
+    public List<Book> getAllOrderDetails(Long orderId){
+        List<Book> listBook = new ArrayList<Book>();
+        List<OrderDetails> listOrderDetails = this.orderDetailsRepository.findOrderDetailsByOrderId(orderId);
+        for(int i = 0; i < listOrderDetails.size(); i++){
+            Optional<Book> findBook = bookRepository.findById(listOrderDetails.get(i).getBookId());
+            Book book = new Book();
+            book.setId(findBook.get().getId());
+            book.setCopies(findBook.get().getCopies());
+            book.setCopiesAvailable(findBook.get().getCopiesAvailable());
+            book.setImg(findBook.get().getImg());
+            book.setCategory(findBook.get().getCategory());
+            book.setDescription(findBook.get().getDescription());
+            book.setAuthor(findBook.get().getAuthor());
+            book.setPrice(findBook.get().getPrice());
+            book.setTitle(findBook.get().getTitle());
+            listBook.add(book);
+        }
+        return listBook;
     }
 
     public void postOder(String userEmail, AddOrder order) {

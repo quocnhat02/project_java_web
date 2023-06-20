@@ -1,5 +1,6 @@
 package com.nhom17books.booksapp.controller;
 
+import com.nhom17books.booksapp.entity.Book;
 import com.nhom17books.booksapp.entity.Order;
 import com.nhom17books.booksapp.entity.OrderDetails;
 import com.nhom17books.booksapp.requestmodels.AddBookRequest;
@@ -38,7 +39,7 @@ public class AdminController {
     }
 
     @GetMapping("/secure/get/order/details")
-    public List<OrderDetails> getListOrderDetails(@RequestHeader(value = "Authorization") String token, @RequestParam Long orderId) throws Exception{
+    public List<Book> getListOrderDetails(@RequestHeader(value = "Authorization") String token, @RequestParam Long orderId) throws Exception{
         String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
         if(admin == null || !admin.equals("admin")){
             throw new Exception("Bạn không được phép truy cập vào trang này");
