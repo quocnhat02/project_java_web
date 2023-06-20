@@ -15,7 +15,6 @@ const OrderDetailBook: React.FC<{
   // Normal Loading Pieces
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const [httpError, setHttpError] = useState(null);
-  const [fetchAgain, setFetchAgain] = useState(false);
 
   const [ordersDetails, setOrdersDetails] = useState<BookModel[]>([]);
   const [statusUpdate, setStatusUpdate] = useState(1);
@@ -49,7 +48,7 @@ const OrderDetailBook: React.FC<{
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [authState, fetchAgain]);
+  }, [authState]);
 
   if (isLoadingOrders) {
     return <SpinnerLoading />;
@@ -64,7 +63,7 @@ const OrderDetailBook: React.FC<{
   }
 
   async function updateStatusFunction() {
-    const url = `http://localhost:8080/api/admin/secure/changestatus/?orderId=${props?.orderId}&status=${statusUpdate}`;
+    const url = `http://localhost:8080/api/admin/secure/changestatus/order/?orderId=${props?.orderId}&status=${statusUpdate}`;
 
     const requestOptions = {
       method: 'PUT',
@@ -78,7 +77,7 @@ const OrderDetailBook: React.FC<{
     if (!statusUpdateResponse.ok) {
       throw new Error('Something went wrong!');
     }
-    setFetchAgain(!fetchAgain);
+    setStatusUpdate(statusUpdate);
   }
 
   return (
