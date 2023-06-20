@@ -52,6 +52,8 @@ public class OrderService {
         for(int i = 0; i < listBookId.size(); i++){
             Optional<Book> book = bookRepository.findById(listBookId.get(i));
             total = total + book.get().getPrice();
+            book.get().setCopies(book.get().getCopies() - 1);
+            book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
         }
         Order newOrder = new Order();
         newOrder.setOrderDate(LocalDate.now().toString());
