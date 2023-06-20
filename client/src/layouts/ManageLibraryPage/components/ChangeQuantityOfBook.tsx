@@ -157,7 +157,7 @@ const ChangeQuantityOfBook: React.FC<{ book: BookModel; deleteBook: any }> = (
         >
           Decrease Quantity
         </button>
-        <button className='m1 btn btn-md btn-light' onClick={increaseAvailable}>
+        <button className='m1 btn btn-md btn-success' onClick={increaseAvailable}>
           Increase Quantity
         </button>
       </div>
