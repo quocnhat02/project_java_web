@@ -64,14 +64,30 @@ const OrderDetailBook: React.FC<{
 
   return (
     <div>
-      <div className='col-md-3 mb-3'>
-        <label className='form-label'> Category</label>
+      <div
+        className='col-md-3 mb-3 w-100'
+        style={{
+          display: 'flex',
+        }}
+      >
+        <label
+          className='form-label'
+          style={{
+            marginRight: '2em',
+          }}
+        >
+          {' '}
+          Category
+        </label>
         <button
           className='form-control btn btn-secondary dropdown-toggle'
           type='button'
           id='dropdownMenuButton1'
           data-bs-toggle='dropdown'
           aria-expanded='false'
+          style={{
+            width: '500px',
+          }}
         >
           {statusUpdate === 1 && 'Pending'}
           {statusUpdate === 2 && 'Confirmed'}
@@ -83,6 +99,10 @@ const OrderDetailBook: React.FC<{
           id='addNewBookId'
           className='dropdown-menu'
           aria-labelledby='dropdownMenuButton1'
+          style={{
+            width: '500px',
+            textAlign: 'center',
+          }}
         >
           {/* {item.status === 1 && 'Pending'}
           {item.status === 2 && 'Confirmed'}
@@ -128,6 +148,7 @@ const OrderDetailBook: React.FC<{
             background: 'orange',
             borderRadius: '3px',
             fontSize: '1.4em',
+            marginBottom: '1em',
           }}
           onClick={() => setOrdersDetails([])}
         >
