@@ -73,6 +73,7 @@ public class AdminService {
         book.setCopiesAvailable(addBookRequest.getCopies());
         book.setCategory(addBookRequest.getCategory());
         book.setImg(addBookRequest.getImg());
+        book.setPrice(addBookRequest.getPrice());
         bookRepository.save(book);
     }
 
