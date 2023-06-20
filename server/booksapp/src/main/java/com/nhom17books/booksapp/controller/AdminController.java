@@ -47,6 +47,24 @@ public class AdminController {
         return orderService.getAllOrderDetails(orderId);
     }
 
+    @PutMapping("/secure/changestatus/order")
+    public void changeStatus(@RequestHeader(value = "Authorization") String token, @RequestParam Long orderId) throws Exception{
+        String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if(admin == null || !admin.equals("admin")){
+            throw new Exception("Bạn không được phép truy cập vào trang này");
+        }
+        orderService.changeStatus(orderId, false);
+    }
+
+    @PutMapping("/secure/cancel/order")
+    public void cancelOrder(@RequestHeader(value = "Authorization") String token, @RequestParam Long orderId) throws Exception{
+        String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if(admin == null || !admin.equals("admin")){
+            throw new Exception("Bạn không được phép truy cập vào trang này");
+        }
+        orderService.changeStatus(orderId, true);
+    }
+
     //Tăng copies available
     @PutMapping("/secure/increase/book/available")
     public void increaseBookAvailable(@RequestHeader(value = "Authorization") String token, @RequestParam Long bookId) throws Exception{

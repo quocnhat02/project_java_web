@@ -7,6 +7,7 @@ import com.nhom17books.booksapp.entity.Book;
 import com.nhom17books.booksapp.entity.Order;
 import com.nhom17books.booksapp.entity.OrderDetails;
 import com.nhom17books.booksapp.requestmodels.AddOrder;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +79,7 @@ public class OrderService {
         newOrder.setAddress(order.getAddress());
         newOrder.setTotal(total);
         newOrder.setPhoneNumber(order.getPhoneNumber());
+        newOrder.setStatus(1);
         orderRepository.save(newOrder);
         for (int i = 0; i < listBookId.size(); i++){
             OrderDetails newOrderDetails = new OrderDetails();
@@ -86,6 +88,24 @@ public class OrderService {
             newOrderDetails.setBookId(listBookId.get(i));
             orderDetailsRepository.save(newOrderDetails);
         }
+    }
+
+    public void changeStatus(Long orderId, boolean cancel) {
+        Optional<Order> findOrder = orderRepository.findById(orderId);
+        Order order = new Order();
+        if(cancel){
+            order.setStatus(5);
+        }else{
+            order.setStatus(findOrder.get().getStatus() + 1);
+        }
+        order.setOrderDate(findOrder.get().getOrderDate());
+        order.setId(findOrder.get().getId());
+        order.setName(findOrder.get().getName());
+        order.setTotal(findOrder.get().getTotal());
+        order.setAddress(findOrder.get().getAddress());
+        order.setUserEmail(findOrder.get().getUserEmail());
+        order.setPhoneNumber(findOrder.get().getPhoneNumber());
+        orderRepository.save(order);
     }
 
 }
