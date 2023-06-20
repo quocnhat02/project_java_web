@@ -73,7 +73,11 @@ const OrderDetailBook: React.FC<{
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          {statusUpdate}
+          {statusUpdate === 1 && 'Pending'}
+          {statusUpdate === 2 && 'Confirmed'}
+          {statusUpdate === 3 && 'Delivering'}
+          {statusUpdate === 4 && 'Complete'}
+          {statusUpdate === 5 && 'Cancelled'}
         </button>
         <ul
           id='addNewBookId'
